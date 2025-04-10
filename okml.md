@@ -1,3 +1,4 @@
+      
 # Kapsamlı Git & GitHub Rehberi
 
 **Yazar:** Cihan Atas
@@ -27,12 +28,12 @@ Bu rehber, Git versiyon kontrol sistemini ve GitHub gibi platformlarla etkileşi
     *   [4.4 SSH Anahtarı Oluşturma ve Platformlara Ekleme](#44-ssh-anahtarı-oluşturma-ve-platformlara-ekleme)
 *   [5. Git’in Temel Taşları: Depo ve Temel Komutlar](#5-gitin-temel-taşları-depo-ve-temel-komutlar)
     *   [5.1 Depo (Repository) Kavramı](#51-depo-repository-kavramı)
-    *   [5.2 Yeni Depo Başlatma ve Klonlama](#52-yeni-depo-başlatma-ve-klonlama)
-    *   [5.3 Değişiklikleri İzleme (The Three States)](#53-değişiklikleri-izleme-the-three-states)
-    *   [5.4 Değişiklikleri Hazırlık Alanına Ekleme (Staging)](#54-değişiklikleri-hazırlık-alanına-ekleme-staging)
-    *   [5.5 Commit Oluşturma (Değişiklikleri Kaydetme)](#55-commit-oluşturma-değişiklikleri-kaydetme)
+    *   [5.2 Yeni Depo Başlatma ve Klonlama (`init`, `clone`)](#52-yeni-depo-başlatma-ve-klonlama-init-clone)
+    *   [5.3 Değişiklikleri İzleme (The Three States & `status`)](#53-değişiklikleri-izleme-the-three-states--status)
+    *   [5.4 Değişiklikleri Hazırlık Alanına Ekleme (Staging & `add`)](#54-değişiklikleri-hazırlık-alanına-ekleme-staging--add)
+    *   [5.5 Commit Oluşturma (Değişiklikleri Kaydetme & `commit`)](#55-commit-oluşturma-değişiklikleri-kaydetme--commit)
     *   [5.6 İyi Commit Mesajları Yazma](#56-iyi-commit-mesajları-yazma)
-    *   [5.7 Değişiklikleri Görüntüleme (Farklar)](#57-değişiklikleri-görüntüleme-farklar)
+    *   [5.7 Değişiklikleri Görüntüleme (Farklar & `diff`)](#57-değişiklikleri-görüntüleme-farklar--diff)
 *   [6. Zaman Makinesi: Geçmişi Yönetme ve Geri Alma](#6-zaman-makinesi-geçmişi-yönetme-ve-geri-alma)
     *   [6.1 Commit Geçmişini Görüntüleme (`git log`)](#61-commit-geçmişini-görüntüleme-git-log)
     *   [6.2 Belirli Bir Commit'i İnceleme (`git show`)](#62-belirli-bir-commiti-inceleme-git-show)
@@ -44,7 +45,7 @@ Bu rehber, Git versiyon kontrol sistemini ve GitHub gibi platformlarla etkileşi
         *   [6.3.5 Geçmişteki Bir Duruma Dönme (`reset`)](#635-geçmişteki-bir-duruma-dönme-reset)
 *   [7. Paralel Evrenler: Dallanma ve Birleştirme](#7-paralel-evrenler-dallanma-ve-birleştirme)
     *   [7.1 Branch (Dal) Nedir?](#71-branch-dal-nedir)
-    *   [7.2 Branch Oluşturma, Geçiş Yapma ve Listeleme](#72-branch-oluşturma-geçiş-yapma-ve-listeleme)
+    *   [7.2 Branch Oluşturma, Geçiş Yapma ve Listeleme (`branch`, `checkout`)](#72-branch-oluşturma-geçiş-yapma-ve-listeleme-branch-checkout)
     *   [7.3 Branch Birleştirme (`merge`)](#73-branch-birleştirme-merge)
     *   [7.4 Merge Çakışmalarını (Conflict) Çözme](#74-merge-çakışmalarını-conflict-çözme)
     *   [7.5 Geçmişi Yeniden Yazma (`rebase`)](#75-geçmişi-yeniden-yazma-rebase)
@@ -131,13 +132,16 @@ Dosya veya dosya setlerindeki değişiklikleri zaman içinde kaydeden bir sistem
 *   **Linux (Debian/Ubuntu):** `sudo apt update && sudo apt install git`
 *   **Linux (Fedora):** `sudo dnf install git`
 
-Kurulumu doğrulamak için terminal veya komut istemcisinde `git --version` komutunu çalıştırın.
+Kurulumu doğrulamak için terminal veya komut istemcisinde aşağıdaki komutu çalıştırın:
 
 ```bash
 git --version
 
+    
 
-
+IGNORE_WHEN_COPYING_START
+Use code with caution.Markdown
+IGNORE_WHEN_COPYING_END
 4.2 Temel Yapılandırma (Zorunlu)
 
 Git, yaptığınız her commit'e kimlik (ad ve e-posta) bilgilerinizi ekler. Bu, değişikliklerin kim tarafından yapıldığını takip etmek için kritiktir. Bu ayarları yapmadan commit atamazsınız veya atmamalısınız.
@@ -156,8 +160,10 @@ IGNORE_WHEN_COPYING_END
 Ayarlarınızı kontrol etmek için:
 
       
-git config --list          # Tüm ayarları gösterir (yerel, global, sistem)
-git config --global --list # Sadece global ayarları gösterir
+# Tüm ayarları gösterir (yerel, global, sistem)
+git config --list          
+# Sadece global ayarları gösterir
+git config --global --list
 
     
 
@@ -260,7 +266,7 @@ IGNORE_WHEN_COPYING_START
 5.1 Depo (Repository) Kavramı
 
 Bir Git deposu (repository veya kısaca "repo"), projenizin tüm dosyalarını, bu dosyaların geçmişini (commit'ler), dallarını (branch) ve diğer tüm Git meta verilerini içeren bir klasördür. Bu bilgilerin çoğu projenizin kök dizinindeki gizli .git klasöründe saklanır.
-5.2 Yeni Depo Başlatma ve Klonlama
+5.2 Yeni Depo Başlatma ve Klonlama (init, clone)
 
     Yeni Bir Proje İçin Git'i Başlatma (init):
     Mevcut bir proje klasörünü Git deposuna dönüştürmek için:
@@ -300,7 +306,7 @@ IGNORE_WHEN_COPYING_START
 
     Bu komut, depoadi (veya belirttiğiniz yeni_klasor_adi) adında bir klasör oluşturur, içine .git klasörünü ve projenin varsayılan branch'inin en son halini indirir. Ayrıca origin adında bir remote (uzak depo) bağlantısını otomatik olarak kurar.
 
-5.3 Değişiklikleri İzleme (The Three States)
+5.3 Değişiklikleri İzleme (The Three States & status)
 
 Git'te dosyalarınız temel olarak üç ana durumda bulunur:
 
@@ -333,8 +339,279 @@ git status çıktısı size şunları söyler:
 
     Untracked files: Git tarafından henüz hiç izlenmeyen yeni dosyalar.
 
-5.4 Değişiklikleri Hazırlık Alanına Ekleme (Staging)
+5.4 Değişiklikleri Hazırlık Alanına Ekleme (Staging & add)
 
 Çalışma dizinindeki değişiklikleri bir sonraki commit'e hazırlamak için git add kullanılır:
 
       
+# Belirli bir dosyayı hazırlık alanına ekle
+git add <dosya_adi.txt>
+
+# Belirli bir klasördeki tüm değişiklikleri ekle
+git add <klasor_adi>/
+
+# Çalışma dizinindeki TÜM değişiklikleri (yeni, değiştirilmiş, silinmiş) ekle
+git add .
+
+# TÜM değişiklikleri eklemenin diğer yolu
+git add -A # veya --all
+
+# Sadece izlenen (tracked) dosyalardaki değişiklikleri ve silinmeleri ekle (yeni dosyaları eklemez)
+git add -u # veya --update
+
+# Değişiklikleri interaktif olarak parça parça seçerek ekle (çok kullanışlı!)
+# Git size her değişiklik bloğunu gösterir ve [y/n/q/a/d/e/?] sorar.
+git add -p # veya --patch
+
+    
+
+IGNORE_WHEN_COPYING_START
+Use code with caution.Bash
+IGNORE_WHEN_COPYING_END
+5.5 Commit Oluşturma (Değişiklikleri Kaydetme & commit)
+
+Hazırlık alanındaki değişiklikleri (snapshot) projenin geçmişine kalıcı olarak kaydetmek için git commit kullanılır. Her commit, projenin o anki durumunun bir kaydıdır, bir SHA-1 kimliği (hash), yazar bilgisi, tarih ve bir mesaj içerir.
+
+      
+# Kısa ve açıklayıcı bir mesajla commit oluşturma (en yaygın kullanım)
+git commit -m "feat: Kullanıcı profili sayfasını ekle"
+
+# `-m` kullanmazsanız, Git'in ayarladığı metin editörü açılır.
+# İlk satıra kısa başlık (max 50 karakter), bir boş satır, sonra detaylı açıklama yazılır.
+git commit
+
+    
+
+IGNORE_WHEN_COPYING_START
+Use code with caution.Bash
+IGNORE_WHEN_COPYING_END
+5.6 İyi Commit Mesajları Yazma
+
+Commit mesajları, projenin geçmişini anlamak, hata ayıklamak ve takım iletişimini sağlamak için hayati öneme sahiptir.
+
+    Anlamlı Başlık: İlk satır (konu satırı) kısa (genellikle <50 karakter) olmalı, emir kipinde yazılmalı ("Ekle", "Düzelt", "Güncelle" gibi) ve değişikliğin ne yaptığını açıkça özetlemelidir.
+
+    Detaylı Açıklama (Gerekiyorsa): Başlıktan sonra bir boş satır bırakılmalı. Ardından, değişikliğin neden yapıldığını, hangi sorunu çözdüğünü veya önemli bağlamları açıklayan daha uzun bir metin yazılabilir. Satırları okunabilirlik için ~72 karaktere sığdırmaya çalışın.
+
+    Conventional Commits Standardı: Takım içinde tutarlılık sağlamak ve otomatik sürüm notu oluşturma gibi araçları kullanmak için popüler bir standarttır. Mesajlar şu formatta yazılır: tip(kapsam): açıklama
+
+        Tipler: feat (yeni özellik), fix (hata düzeltme), docs (dokümantasyon), style (formatlama), refactor (kod iyileştirme), perf (performans), test (test ekleme/düzeltme), build (yapı sistemi), ci (sürekli entegrasyon), chore (diğer bakım işleri).
+
+        Kapsam (Opsiyonel): Değişikliğin etki ettiği alan (örn: auth, ui, api).
+
+        Açıklama: Başlık kısmındaki gibi emir kipinde kısa açıklama.
+
+        Örnekler:
+
+            feat(auth): Google ile giriş yapma özelliği eklendi
+
+            fix: Kullanıcı silindiğinde ilişkili verilerin temizlenmemesi sorunu düzeltildi
+
+            docs(readme): Kurulum adımları güncellendi
+
+            refactor(api): Servis katmanındaki kod tekrarları azaltıldı
+
+            chore: Bağımlılıklar son sürümlere güncellendi
+
+        Breaking Change: Eğer değişiklik geriye dönük uyumluluğu bozuyorsa, açıklamanın sonuna BREAKING CHANGE: ile başlayan bir not eklenir veya tipin sonuna ! konur (örn: feat!: ...).
+
+5.7 Değişiklikleri Görüntüleme (Farklar & diff)
+
+Yapılan veya yapılacak olan değişiklikleri satır satır görmek için git diff kullanılır:
+
+      
+# Çalışma dizini ile hazırlık alanı (staging area) arasındaki farklar
+# (Yani `git add` YAPMADAN önceki değişiklikler)
+git diff
+
+# Belirli bir dosyadaki çalışma dizini <> hazırlık alanı farkları
+git diff -- <dosya_yolu>
+
+# Hazırlık alanı ile son commit arasındaki farklar
+# (Yani `git add` YAPTIKTAN sonra commit'e neyin gireceği)
+git diff --staged
+# veya
+git diff --cached
+
+# Belirli bir dosyadaki hazırlık alanı <> son commit farkları
+git diff --staged -- <dosya_yolu>
+
+# Çalışma dizini ile son commit arasındaki tüm farklar
+# (Hem hazırlık alanına eklenen hem eklenmeyen tüm kaydedilmemiş değişiklikler)
+git diff HEAD
+
+# İki commit arasındaki farklar
+git diff <commit_hash1> <commit_hash2>
+
+# İki branch arasındaki farklar
+git diff <branch1>..<branch2>
+
+# Belirli bir dosyadaki branch'ler arası farklar
+git diff <branch1>..<branch2> -- <dosya_yolu>
+
+    
+
+IGNORE_WHEN_COPYING_START
+Use code with caution.Bash
+IGNORE_WHEN_COPYING_END
+6. Zaman Makinesi: Geçmişi Yönetme ve Geri Alma
+
+Git'in en güçlü yanlarından biri, proje geçmişini yönetme ve hataları geri alma yeteneğidir.
+6.1 Commit Geçmişini Görüntüleme (git log)
+
+Projenin commit geçmişini görmek için git log kullanılır. Birçok kullanışlı seçeneği vardır:
+
+      
+# Tüm commit geçmişi (varsayılan, uzun format)
+git log
+
+# Her commit'i tek satırda gösterir (kısa hash ve başlık) - Çok Kullanışlı!
+git log --oneline
+
+# Dallanma ve birleşme noktalarını ASCII grafikle gösterir
+git log --graph
+
+# `--oneline` ve `--graph` bir arada
+git log --graph --oneline
+
+# Her commit için değiştirilen dosyaları ve eklenen/çıkarılan satır sayısını gösterir
+git log --stat
+
+# Her commit için yapılan dosya içerik değişikliklerini (diff/patch) gösterir
+git log -p
+# veya
+git log --patch
+
+# Sadece son N commit'i göster
+git log -n 5 # Son 5 commit
+
+# Belirli bir yazarın commit'lerini göster (tırnak işareti isimde boşluk varsa önemlidir)
+git log --author="Yazar Adı"
+
+# Commit mesajında belirli bir metin içeren commit'leri ara
+git log --grep="hata düzeltme"
+
+# Belirli bir tarih aralığındaki commit'leri göster
+git log --since="2 weeks ago"
+git log --until="2023-10-26"
+git log --since="2023-01-01" --until="2023-06-30"
+
+# Belirli bir dosyayı veya klasörü etkileyen commit'leri göster
+git log -- <dosya_veya_klasor_yolu>
+
+# Daha okunabilir ve özelleştirilmiş format (örnek) - Alias olarak atanabilir!
+git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=short
+
+    
+
+IGNORE_WHEN_COPYING_START
+Use code with caution.Bash
+IGNORE_WHEN_COPYING_END
+6.2 Belirli Bir Commit'i İnceleme (git show)
+
+Tek bir commit'in tüm detaylarını (yazar, tarih, tam mesaj ve yaptığı tüm değişiklikler) görmek için:
+
+      
+# Belirli bir commit hash'i ile
+git show <commit_hash>
+# Örnek:
+git show a1b2c3d4e5f6
+
+# Son commit'i göster
+git show HEAD
+
+# Sondan bir önceki commit'i göster
+git show HEAD~1
+
+# Sondan üçüncü commit'i göster
+git show HEAD~3
+
+# Sadece commit bilgisini (mesaj, yazar vb.) göster, diff gösterme
+git show --no-patch <commit_hash>
+# Sadece commit'in değiştirdiği dosyaların listesini göster
+git show --name-only <commit_hash>
+
+    
+
+IGNORE_WHEN_COPYING_START
+Use code with caution.Bash
+IGNORE_WHEN_COPYING_END
+6.3 Geri Alma İşlemleri
+
+Hatalar olur! Git, hataları düzeltmek veya değişiklikleri geri almak için çeşitli mekanizmalar sunar:
+6.3.1 Son Commit'i Düzenleme (--amend)
+
+Son commit'e dosya eklemeyi unuttuysanız, bir hatayı düzelttiyseniz veya sadece commit mesajını değiştirmek istiyorsanız, yeni bir commit oluşturmak yerine son commit'i düzenleyebilirsiniz.
+
+ÖNEMLİ UYARI: Bu işlem son commit'in hash'ini değiştirir, yani geçmişi yeniden yazar. Sadece henüz uzak depoya göndermediğiniz (push etmediğiniz) commit'ler için kullanın. Başkalarıyla paylaşılan bir branch'teki commit'i amend ederseniz, ciddi sorunlara yol açabilirsiniz (onların geçmişiyle sizinki uyumsuz hale gelir).
+
+      
+# 1. Unutulan dosyayı/değişikliği hazırlık alanına ekleyin
+git add unutulan_dosya.txt
+git add duzeltilmis_dosya.py
+
+# 2. Commit'i amend ile yeniden oluşturun
+# Mevcut mesajı kullanarak (sadece eklenen dosyaları dahil eder):
+git commit --amend --no-edit
+
+# Yeni bir mesaj yazarak (editör açılır):
+git commit --amend
+
+# Yeni bir mesajı doğrudan komut satırında belirterek:
+git commit --amend -m "feat: Kullanıcı girişi tamamlandı (doğrulama eklendi)"
+
+    
+
+IGNORE_WHEN_COPYING_START
+Use code with caution.Bash
+IGNORE_WHEN_COPYING_END
+6.3.2 Hazırlık Alanından Dosya Çıkarma (reset HEAD/restore --staged)
+
+git add ile yanlışlıkla hazırlık alanına (staging area) eklediğiniz bir değişikliği veya dosyayı commit'lemeden önce geri almak için:
+
+      
+# Yeni ve önerilen yöntem:
+git restore --staged <dosya_adi>
+
+# Tüm hazırlık alanını temizle (tüm eklenenleri geri al)
+git restore --staged .
+
+# Eski yöntem (hala çalışır):
+# git reset HEAD <dosya_adi>
+# git reset HEAD .
+
+    
+
+IGNORE_WHEN_COPYING_START
+Use code with caution.Bash
+IGNORE_WHEN_COPYING_END
+
+Bu komutlar çalışma dizininizdeki (working directory) değişikliklere dokunmaz, sadece hazırlık alanını (staging area) temizler veya belirtilen dosyayı çıkarır.
+6.3.3 Çalışma Dizinindeki Değişiklikleri Geri Alma (checkout --/restore)
+
+Çalışma dizininde (working directory) yaptığınız ama henüz commit'lemediğiniz (hatta belki add bile yapmadığınız) değişiklikleri iptal etmek ve dosyanın son commit'teki haline dönmesini sağlamak için:
+
+UYARI: Bu işlem, çalışma dizinindeki o dosyaya ait kaydedilmemiş tüm değişiklikleri kalıcı olarak siler. Geri alınamaz. Çok dikkatli olun!
+
+      
+# Yeni ve önerilen yöntem:
+git restore <dosya_adi>
+
+# Çalışma dizinindeki TÜM değişiklikleri geri al (çok tehlikeli!)
+# git restore .
+
+# Eski yöntem (daha kafa karıştırıcı olabilir):
+# git checkout -- <dosya_adi>
+# git checkout -- . # Çok tehlikeli!
+
+    
+
+IGNORE_WHEN_COPYING_START
+Use code with caution.Bash
+IGNORE_WHEN_COPYING_END
+6.3.4 Bir Commit'in Değişikliklerini Geri Alan Yeni Commit Oluşturma (revert)
+
+Geçmişteki belirli bir commit'in yaptığı değişiklikleri tersine çeviren yeni bir commit oluşturur. Proje geçmişini değiştirmez (yani eski commit'i silmez), sadece o commit'in etkilerini ortadan kaldıran zıt bir değişiklik ekler.
+
+Bu yöntem, *
+Token count 38,209 / 1,048,576
