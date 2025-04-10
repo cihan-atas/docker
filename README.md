@@ -1,7 +1,7 @@
 # Kapsamlı Docker Rehberi: Modern Uygulama Geliştirme ve Dağıtımın Anahtarı
 
 **Yazar:** Cihan Atas <atascihan115@gmail.com>
-*(Sercan Bayram'ın temel komut listesinden yararlanılmıştır)*
+
 
 <!-- Bu README.md dosyası, sağlanan LaTeX kaynağından otomatik olarak dönüştürülmüştür. -->
 
