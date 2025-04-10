@@ -1,6 +1,3 @@
-Okay, here is the LaTeX document converted into a `README.md` Markdown format.
-
-```markdown
 # Kapsamlı Docker Rehberi: Modern Uygulama Geliştirme ve Dağıtımın Anahtarı
 
 **Yazar:** Cihan Atas <atascihan115@gmail.com>
